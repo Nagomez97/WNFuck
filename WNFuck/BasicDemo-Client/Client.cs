@@ -8,7 +8,7 @@ namespace WNFuck
     {
         static void Main(string[] args)
         {
-            WELL_KNOWN_WNF_NAME stateName = WELL_KNOWN_WNF_NAME.WNF_SHEL_WINDOWSTIP_CONTENT_PUBLISHED;
+            WELL_KNOWN_WNF_NAME stateName = WELL_KNOWN_WNF_NAME.WNF_XBOX_ACHIEVEMENT_TRACKER_STATE_CHANGED;
             Console.WriteLine($"[+] WNF Client started. Press any key to send a {stateName} notification.");
             Console.ReadLine();
 
@@ -20,6 +20,10 @@ namespace WNFuck
                 handle.WriteString(data);
 
                 var res = NativeAPI.NtUpdateWnfStateData(stateName, handle, data.Length, IntPtr.Zero, nullHandle, 0, 0);
+                if (res == Common.Interop.NativeConsts.NtStatus.AccessDenied)
+                {
+                    Console.WriteLine($"[!] Access denied. You need write permissions over {stateName}");
+                }
             }
             
 

@@ -36,7 +36,7 @@ namespace WNFuck
             else
             {
                 Console.WriteLine();
-                Console.WriteLine("[+] Received data from server.");
+                Console.WriteLine($"[+] Received {(WELL_KNOWN_WNF_NAME)stateName} data.");
                 Console.WriteLine("    |-> Timestamp : {0}", nChangeStamp);
                 Console.WriteLine("    |-> Buffer Size : {0} byte(s)", nBufferSize);
                 Console.WriteLine("    |-> Data :\n");
@@ -58,7 +58,7 @@ namespace WNFuck
 
             Server s = new Server();
 
-            WELL_KNOWN_WNF_NAME stateName = WELL_KNOWN_WNF_NAME.WNF_SHEL_WINDOWSTIP_CONTENT_PUBLISHED;
+            WELL_KNOWN_WNF_NAME stateName = WELL_KNOWN_WNF_NAME.WNF_XBOX_ACHIEVEMENT_TRACKER_STATE_CHANGED;
             Console.WriteLine($"[+] WNF Server started.");
 
             IntPtr pCallback = Marshal.GetFunctionPointerForDelegate(new CallbackDelegate(s.NotifyCallback));
@@ -84,7 +84,6 @@ namespace WNFuck
 
             do
             {
-                Console.WriteLine();
                 Thread.Sleep(5000);
             } while (true);
         }

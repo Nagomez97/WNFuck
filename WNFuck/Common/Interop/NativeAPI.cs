@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using WNFuck.Common.WNF.Enums;
+using System.Text;
+using WNFuck.Common.Interop.NativeConsts;
+using WNFuck.Common.WNF.Defines;
 
 namespace WNFuck.Common.Interop
 {
@@ -9,15 +11,21 @@ namespace WNFuck.Common.Interop
         #region KERNEL32
         [DllImport("kernel32.dll", SetLastError = true)]
         public static extern IntPtr LocalFree(IntPtr hMem);
+
+        [DllImport("kernel32", SetLastError = true)]
+        public static extern bool VirtualFree(
+            IntPtr lpAddress,
+            int dwSize,
+            uint dwFreeType);
         #endregion
 
         #region NTDLl
         [DllImport("ntdll.dll", SetLastError = true)]
         public static extern NativeConsts.NtStatus NtUpdateWnfStateData(
             in WELL_KNOWN_WNF_NAME StateName, 
-            SafeMemoryHandle Buffer, 
+            byte[] Buffer, 
             int Length, IntPtr TypeId, 
-            SafeMemoryHandle ExplicitScope, 
+            IntPtr ExplicitScope, 
             int MatchingChangeScope, 
             int CheckStamp);
 
@@ -33,18 +41,29 @@ namespace WNFuck.Common.Interop
             int Unknown);
 
         [DllImport("ntdll.dll")]
+        public static extern NativeConsts.NtStatus RtlSubscribeWnfStateChangeNotification(
+            out IntPtr Subscription,
+            ulong StateName,
+            int ChangeStamp,
+            IntPtr Callback,
+            IntPtr CallbackContext,
+            IntPtr TypeId,
+            int SerializationGroup,
+            int Unknown);
+
+        [DllImport("ntdll.dll")]
         public static extern NativeConsts.NtStatus RtlUnsubscribeWnfStateChangeNotification(
             IntPtr Subscription);
 
         [DllImport("ntdll.dll")]
         public static extern NativeConsts.NtStatus NtCreateWnfStateName(
-            out WELL_KNOWN_WNF_NAME StateName,
+            out ulong StateName,
             WNF_STATE_NAME_LIFETIME NameLifetime,
             WNF_DATA_SCOPE DataScope,
             bool PersistData,
             IntPtr TypeId,
             int MaximumStateSize,
-            IntPtr SecurityDescriptor);
+            SafeMemoryHandle SecurityDescriptor);
 
         [DllImport("ntdll.dll")]
         public static extern NativeConsts.NtStatus NtQueryWnfStateData(
@@ -52,8 +71,31 @@ namespace WNFuck.Common.Interop
             IntPtr TypeId,
             IntPtr ExplicitScope,
             out int ChangeStamp,
-            SafeMemoryHandle Buffer,
-            ref int BufferSize);
+            byte[] Buffer,
+            out int BufferSize);
+        #endregion
+
+        #region ADVAPI32
+        [DllImport("advapi32.dll", SetLastError = true)]
+        public static extern bool IsValidSecurityDescriptor(byte[] pSecurityDescriptor);
+
+        [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+        public static extern bool ConvertSecurityDescriptorToStringSecurityDescriptor(
+            byte[] pSecurityDescriptor,
+            int RequestedStringSDRevision,
+            SECURITY_INFORMATION SecurityInformation,
+            out StringBuilder StringSecurityDescriptor,
+            IntPtr StringSecurityDescriptorLen);
+
+        [DllImport("advapi32.dll", SetLastError = true)]
+        public static extern bool ConvertStringSecurityDescriptorToSecurityDescriptor(
+          string StringSecurityDescriptor,
+          uint StringSDRevision,
+          out IntPtr SecurityDescriptor,
+          out ulong SecurityDescriptorSize);
+
+        [DllImport("advapi32.dll", SetLastError = true)]
+        public static extern int GetSecurityDescriptorLength(byte[] pSecurityDescriptor);
         #endregion
     }
 }

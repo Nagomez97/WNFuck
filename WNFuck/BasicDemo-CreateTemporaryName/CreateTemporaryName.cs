@@ -1,15 +1,70 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data.SqlTypes;
+using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading;
+using WNFuck.Common.HexDump;
 using WNFuck.Common.Interop;
 using WNFuck.Common.Interop.NativeConsts;
 using WNFuck.Common.WNF.Defines;
-using WNFuck.Common.HexDump;
-using System.Threading;
+using WNFuck.Common.WNF.Utils;
 
 namespace WNFuck
 {
     internal class Server
     {
+        static void Main(string[] args)
+        {
+            string sdString = "D:(A;;CCDC;;;WD)"; // All users can RW
+
+            // Creates a temporar WNF State Name which
+            // will be available as long as this process lives
+            ulong stateName = CreateTemporaryStateName(sdString);
+
+            if (stateName == 0)
+            {
+                Console.WriteLine("[!] Error creating StateName!");
+            }
+
+            Listen(stateName);
+        }
+
+        internal static ulong CreateTemporaryStateName(string sdString)
+        {
+            if (NativeAPI.ConvertStringSecurityDescriptorToSecurityDescriptor(
+                sdString,
+                Utils.SDDL_REVISION_1,
+                out IntPtr securityDescriptor,
+                out ulong sdSize))
+            {
+                using (SafeMemoryHandle safeSD = new SafeMemoryHandle(securityDescriptor)) // needs to be freed
+                {
+                    NtStatus status = NativeAPI.NtCreateWnfStateName(
+                        out ulong stateName,
+                        Common.WNF.Defines.WNF_STATE_NAME_LIFETIME.TEMPORARY, // If this process dies, the WNF Name will no longer be available
+                        Common.WNF.Defines.WNF_DATA_SCOPE.SYSTEM,
+                        false,
+                        IntPtr.Zero,
+                        4096,
+                        safeSD);
+
+                    if (status != NtStatus.Success)
+                    {
+                        Console.WriteLine($"[!] Could not create new WNF State Name! {status}");
+                        return 0;
+                    }
+
+                    Console.WriteLine("[+] New WNF State Name is created successfully : 0x{0}\n", stateName.ToString("X16"));
+                    return stateName;
+                }
+
+            }
+
+            return 0;
+        }
+
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
         private delegate NtStatus CallbackDelegate(
             ulong StateName,
@@ -48,8 +103,8 @@ namespace WNFuck
 
             return NtStatus.Success;
         }
-
-        static void Main(string[] args)
+            
+        internal static void Listen(ulong stateName)
         {
             NtStatus ntstatus;
             IntPtr hEvent = IntPtr.Zero;
@@ -58,8 +113,7 @@ namespace WNFuck
 
             Server s = new Server();
 
-            WELL_KNOWN_WNF_NAME stateName = WELL_KNOWN_WNF_NAME.WNF_XBOX_ACHIEVEMENT_TRACKER_STATE_CHANGED;
-            Console.WriteLine($"[+] WNF Server started.");
+            Console.WriteLine($"[+] WNF Server started. Execute client with current StateName to interact.");
 
             IntPtr pCallback = Marshal.GetFunctionPointerForDelegate(new CallbackDelegate(s.NotifyCallback));
 

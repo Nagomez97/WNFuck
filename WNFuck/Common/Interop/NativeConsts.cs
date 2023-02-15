@@ -1,4 +1,6 @@
-﻿namespace WNFuck.Common.Interop.NativeConsts
+﻿using System;
+
+namespace WNFuck.Common.Interop.NativeConsts
 {
     public enum NtStatus : uint
     {
@@ -340,5 +342,32 @@
         TransactionsNotFrozen = 0xc0190045,
 
         MaximumNtStatus = 0xffffffff
+    }
+
+    [Flags]
+    public enum SECURITY_INFORMATION : uint
+    {
+        OWNER_SECURITY_INFORMATION = 0x00000001,
+        GROUP_SECURITY_INFORMATION = 0x00000002,
+        DACL_SECURITY_INFORMATION = 0x00000004,
+        SACL_SECURITY_INFORMATION = 0x00000008,
+        LABEL_SECURITY_INFORMATION = 0x00000010,
+        UNPROTECTED_SACL_SECURITY_INFORMATION = 0x10000000,
+        UNPROTECTED_DACL_SECURITY_INFORMATION = 0x20000000,
+        PROTECTED_SACL_SECURITY_INFORMATION = 0x40000000,
+        PROTECTED_DACL_SECURITY_INFORMATION = 0x80000000
+    }
+
+    internal class Win32Consts
+    {
+        public const int ACL_REVISION = 2;
+        public const int ACL_REVISION_DS = 4;
+        public const uint MEM_COMMIT = 0x00001000;
+        public const uint MEM_RELEASE = 0x00008000;
+        public const uint PAGE_READWRITE = 0x04;
+        public const int SECURITY_DESCRIPTOR_REVISION = 1;
+        public const int SECURITY_MAX_SID_SIZE = 68;
+        public const int STATUS_SUCCESS = 0;
+        public const ulong WNF_STATE_KEY = 0x41C64E6DA3BC0074;
     }
 }

@@ -3,24 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace WNFuck.Common.WNF.Enums
+namespace WNFuck.Common.WNF.Defines
 {
     public enum WNF_STATE_NAME_LIFETIME : uint
     {
-        WnfWellKnownStateName = 0,
-        WnfPermanentStateName = 1,
-        WnfPersistentStateName = 2,
-        WnfTemporaryStateName = 3
+        WELL_KNOWN = 0,
+        PERMANENT = 1,
+        PERSISTENT = 2,
+        TEMPORARY = 3
     }
 
     public enum WNF_DATA_SCOPE : uint
     {
-        WnfDataScopeSystem = 0,
-        WnfDataScopeSession = 1,
-        WnfDataScopeUser = 2,
-        WnfDataScopeProcess = 3,
-        WnfDataScopeMachine = 4,
-        WnfDataScopePhysicalMachine = 5
+        SYSTEM = 0,
+        SESSION = 1,
+        USER = 2,
+        PROCESS = 3,
+        MACHINE = 4,
+        PHYSICAL_MACHINE = 5
     }
 
     public enum WELL_KNOWN_WNF_NAME : ulong
@@ -1397,5 +1397,15 @@ namespace WNFuck.Common.WNF.Enums
         WNF_XBOX_WPN_PLATFORM_HOST_INITIALIZED = 0x19890C35A3BDA075UL,
         WNF_XBOX_XAM_SMB_SHARES_INIT_ALLOW_SYSTEM_READY = 0x19890C35A3BD4075UL,
         WNF_XBOX_XBBLACKBOX_SNAP_NOTIFICATION = 0x19890C35A3BD4875UL
+    }
+
+    public struct WNF_STATE_NAME_STRUCT
+    {
+        public ulong Version;
+        public WNF_STATE_NAME_LIFETIME NameLifetime;
+        public WNF_DATA_SCOPE DataScope;
+        public bool PermanentData;
+        public ulong SequenceNumber;
+        public ulong OwnerTag;
     }
 }

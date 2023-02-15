@@ -7,7 +7,7 @@
     <ProjectGuid>{BE3761E4-8B11-49F3-9C2C-DFBF7AA251D7}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>WNFuck</RootNamespace>
-    <AssemblyName>WNFuck</AssemblyName>
+    <AssemblyName>DemoClient</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

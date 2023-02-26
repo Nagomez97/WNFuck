@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Runtime.InteropServices;
-using WNFuck.Common.Interop;
-using WNFuck.Common.Interop.NativeConsts;
 using WNFuck.Common.WNF.Defines;
-using WNFuck.Common.HexDump;
 using WNFuck.Common.WNF.Utils;
 
 namespace WNFuck
@@ -23,11 +19,13 @@ namespace WNFuck
 
             Console.WriteLine(new string('-', 120));
 
-            foreach (var stateName in Utils.GetAllWellKnownStateNames())
-            {
-                FindStateNames(stateName, readable: false, writable: true, hasAvailableBuffer: true);
-            }
+            //foreach (var stateName in Utils.GetAllWellKnownStateNames())
+            //{
+            //    FindStateNames(stateName, readable: false, writable: true, hasAvailableBuffer: true);
+            //}
 
+            WELL_KNOWN_WNF_NAME stateName = WELL_KNOWN_WNF_NAME.WNF_CAM_MICROPHONE_USAGE_CHANGED;
+            FindStateNames(stateName);
         }
 
         static void FindStateNames(WELL_KNOWN_WNF_NAME stateName, bool readable = false, bool writable = false, bool hasAvailableBuffer = false)
@@ -51,7 +49,7 @@ namespace WNFuck
                 stateNameStruct.NameLifetime,
                 stateNameStruct.PermanentData,
                 canRead && canWrite ? "RW" : (canRead ? "RO" : (canWrite ? "WO" : "N/A")),
-                bufferSize);
+                maxSize);
 
             //Console.WriteLine(securityDescriptorStr);
         }

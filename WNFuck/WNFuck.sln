@@ -15,6 +15,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicDemo-Consumer", "Basic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicDemo-CreateTemporaryName", "BasicDemo-CreateTemporaryName\BasicDemo-CreateTemporaryName.csproj", "{F11EE63E-1F72-4AA2-A6FF-045A4B1055B3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicDemo-CallbackParser", "BasicDemo-StructParser\BasicDemo-CallbackParser.csproj", "{2F3230FB-489F-43B7-A651-82606D54EAE6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicDemo-Injection", "BasicDemo-Injection\BasicDemo-Injection.csproj", "{F03BB216-7D84-4CF3-A092-B8034B614670}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WNFuckInjection", "WNFuck\WNFuckInjection.csproj", "{2348F25C-BB3D-484E-8809-763A0EDEAE94}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicDemo-GetProcessStateNamesInfo", "BasicDemo-GetProcessStateNamesInfo\BasicDemo-GetProcessStateNamesInfo.csproj", "{108A4394-B138-4D48-AB0A-2DFF1068F91B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WNFDataPersistor", "WNFDataPersistor\WNFDataPersistor.csproj", "{52A4858E-C775-44C6-B313-239187E26BA1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicrophoneDemo", "MicrophoneDemo\MicrophoneDemo.csproj", "{639B3E7F-65C7-4F18-A6A1-CCA2B86D3AF7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +57,30 @@ Global
 		{F11EE63E-1F72-4AA2-A6FF-045A4B1055B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F11EE63E-1F72-4AA2-A6FF-045A4B1055B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F11EE63E-1F72-4AA2-A6FF-045A4B1055B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F3230FB-489F-43B7-A651-82606D54EAE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F3230FB-489F-43B7-A651-82606D54EAE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F3230FB-489F-43B7-A651-82606D54EAE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F3230FB-489F-43B7-A651-82606D54EAE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F03BB216-7D84-4CF3-A092-B8034B614670}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F03BB216-7D84-4CF3-A092-B8034B614670}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F03BB216-7D84-4CF3-A092-B8034B614670}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F03BB216-7D84-4CF3-A092-B8034B614670}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2348F25C-BB3D-484E-8809-763A0EDEAE94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2348F25C-BB3D-484E-8809-763A0EDEAE94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2348F25C-BB3D-484E-8809-763A0EDEAE94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2348F25C-BB3D-484E-8809-763A0EDEAE94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{108A4394-B138-4D48-AB0A-2DFF1068F91B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{108A4394-B138-4D48-AB0A-2DFF1068F91B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{108A4394-B138-4D48-AB0A-2DFF1068F91B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{108A4394-B138-4D48-AB0A-2DFF1068F91B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52A4858E-C775-44C6-B313-239187E26BA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52A4858E-C775-44C6-B313-239187E26BA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52A4858E-C775-44C6-B313-239187E26BA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52A4858E-C775-44C6-B313-239187E26BA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{639B3E7F-65C7-4F18-A6A1-CCA2B86D3AF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{639B3E7F-65C7-4F18-A6A1-CCA2B86D3AF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{639B3E7F-65C7-4F18-A6A1-CCA2B86D3AF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{639B3E7F-65C7-4F18-A6A1-CCA2B86D3AF7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

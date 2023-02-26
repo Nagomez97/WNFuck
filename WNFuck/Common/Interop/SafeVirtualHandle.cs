@@ -43,7 +43,7 @@ namespace WNFuck.Common.Interop
             if (!_closed && handle != IntPtr.Zero)
             {
                 _closed = true;
-                return NativeAPI.VirtualFree(handle, _size, NativeConsts.Win32Consts.MEM_RELEASE);
+                return NativeAPI.VirtualFree(handle, _size, WNF.PeProcess.PeProcess.AllocationType.Release);
             }
 
             return true;

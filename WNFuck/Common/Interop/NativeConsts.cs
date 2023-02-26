@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 
 namespace WNFuck.Common.Interop.NativeConsts
 {
@@ -358,7 +359,7 @@ namespace WNFuck.Common.Interop.NativeConsts
         PROTECTED_DACL_SECURITY_INFORMATION = 0x80000000
     }
 
-    internal class Win32Consts
+    public class Win32Consts
     {
         public const int ACL_REVISION = 2;
         public const int ACL_REVISION_DS = 4;
@@ -369,5 +370,136 @@ namespace WNFuck.Common.Interop.NativeConsts
         public const int SECURITY_MAX_SID_SIZE = 68;
         public const int STATUS_SUCCESS = 0;
         public const ulong WNF_STATE_KEY = 0x41C64E6DA3BC0074;
+
+        // Const for WNF_CONTEXT_HEADER.NodeTypeCode
+        public const short WNF_NODE_SUBSCRIPTION_TABLE = 0x911;
+        public const short WNF_NODE_NAME_SUBSCRIPTION = 0x912;
+        public const short WNF_NODE_SERIALIZATION_GROUP = 0x913;
+        public const short WNF_NODE_USER_SUBSCRIPTION = 0x914;
     }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct WNF_CONTEXT_HEADER
+    {
+        public short NodeTypeCode;
+        public short NodeByteSize;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct LIST_ENTRY64
+    {
+        public long Flink;
+        public long Blink;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct RTL_RB_TREE64
+    {
+        public long /* PRTL_BALANCED_NODE */ Root;
+        public long /* PRTL_BALANCED_NODE */ Min;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct WNF_SUBSCRIPTION_TABLE64_WIN11
+    {
+        public WNF_CONTEXT_HEADER Header;
+        public long /* SRWLOCK */ NamesTableLock;
+        public RTL_RB_TREE64 NamesTableEntry;
+        public LIST_ENTRY64 SerializationGroupListHead;
+        public long /* SRWLOCK */ SerializationGroupLock;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+        public int[] Unknown1;
+        public int SubscribedEventSet;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+        public int[] Unknown2;
+        public long Timer;
+        public ulong TimerDueTime;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct RTL_BALANCED_NODE64
+    {
+        public long /* PRTL_BALANCED_NODE */ Left;
+        public long /* PRTL_BALANCED_NODE */ Right;
+        public long ParentValue;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct WNF_NAME_SUBSCRIPTION64_WIN11
+    {
+        public WNF_CONTEXT_HEADER Header;
+        public ulong SubscriptionId;
+        public ulong /* WNF_STATE_NAME_INTERNAL */ StateName;
+        public uint /* WNF_CHANGE_STAMP */ CurrentChangeStamp;
+        public RTL_BALANCED_NODE64 NamesTableEntry;
+        public long /* ref WNF_TYPE_ID */ TypeId;
+        public long /* SRWLOCK */ SubscriptionLock;
+        public LIST_ENTRY64 SubscriptionsListHead;
+        public uint NormalDeliverySubscriptions;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 5)]
+        public uint[] NotificationTypeCount;
+        public long /* ref WNF_DELIVERY_DESCRIPTOR */ RetryDescriptor;
+        public uint DeliveryState;
+        public ulong ReliableRetryTime;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct WNF_USER_SUBSCRIPTION64
+    {
+        public WNF_CONTEXT_HEADER Header;
+        public LIST_ENTRY64 SubscriptionsListEntry;
+        public long /* ref WNF_NAME_SUBSCRIPTION */ NameSubscription;
+        public long /* ref WNF_USER_CALLBACK */ Callback;
+        public long CallbackContext;
+        public ulong SubProcessTag;
+        public uint CurrentChangeStamp;
+        public uint DeliveryOptions;
+        public uint SubscribedEventSet;
+        public long /* WNF_SERIALIZATION_GROUP */ SerializationGroup;
+        public uint UserSubscriptionCount;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 10)]
+        public ulong[] Unknown;
+    }
+
+    public struct WNF_CALLBACK
+    {
+        public IntPtr Callback;
+        public IntPtr CallbackContext;
+    }
+
+    [Flags]
+    public enum MemoryAllocationFlags
+    {
+        WRITE_WATCH_FLAG_RESET = 0x00000001,
+        MEM_COMMIT = 0x00001000,
+        MEM_RESERVE = 0x00002000,
+        MEM_COMMIT_OR_RESERVE = 0x00003000,
+        MEM_DECOMMIT = 0x00004000,
+        MEM_RELEASE = 0x00008000,
+        MEM_FREE = 0x00010000,
+        MEM_PUBLIC = 0x00020000,
+        MEM_MAPPED = 0x00040000,
+        MEM_RESET = 0x00080000,
+        MEM_TOP_DOWN = 0x00100000,
+        MEM_WRITE_WATCH = 0x00200000,
+        MEM_PHYSICAL = 0x00400000,
+        SEC_IMAGE = 0x01000000,
+        MEM_IMAGE = SEC_IMAGE
+    }
+
+    [Flags]
+    public enum MemoryProtectionFlags : uint
+    {
+        PAGE_NOACCESS = 0x01,
+        PAGE_READONLY = 0x02,
+        PAGE_READWRITE = 0x04,
+        PAGE_WRITECOPY = 0x08,
+        PAGE_EXECUTE = 0x10,
+        PAGE_EXECUTE_READ = 0x20,
+        PAGE_EXECUTE_READWRITE = 0x40,
+        PAGE_EXECUTE_WRITECOPY = 0x80,
+        PAGE_TARGETS_INVALID = 0x40000000,
+        PAGE_TARGETS_NO_UPDATE = 0x40000000
+    }
+
 }

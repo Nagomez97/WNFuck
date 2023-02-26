@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8D4EEABC-E418-4AA7-A98F-907D18779CAF}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>Common</RootNamespace>
-    <AssemblyName>Common</AssemblyName>
+    <ProjectGuid>{2F3230FB-489F-43B7-A651-82606D54EAE6}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>BasicDemo_StructParser</RootNamespace>
+    <AssemblyName>BasicDemo-StructParser</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>z:\Demo\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -31,9 +31,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -44,16 +41,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HexDump\HexDump.cs" />
-    <Compile Include="Interop\SafeVirtualHandle.cs" />
-    <Compile Include="Interop\NativeConsts.cs" />
-    <Compile Include="Interop\SafeMemoryHandle.cs" />
-    <Compile Include="Interop\NativeAPI.cs" />
-    <Compile Include="PeProcess\PeProcess.cs" />
-    <Compile Include="PeProcess\PeUtils.cs" />
+    <Compile Include="CallbackParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WNF\Defines.cs" />
-    <Compile Include="WNF\Utils.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{8d4eeabc-e418-4aa7-a98f-907d18779caf}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

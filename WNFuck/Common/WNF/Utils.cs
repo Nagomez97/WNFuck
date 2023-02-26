@@ -132,5 +132,39 @@ namespace WNFuck.Common.WNF.Utils
             }
             return true;
         }
+
+        public static ulong CreateTemporaryStateName(string sdString, WNF_DATA_SCOPE scope, int size)
+        {
+            if (NativeAPI.ConvertStringSecurityDescriptorToSecurityDescriptor(
+                sdString,
+                Utils.SDDL_REVISION_1,
+                out IntPtr securityDescriptor,
+                out ulong sdSize))
+            {
+                using (SafeMemoryHandle safeSD = new SafeMemoryHandle(securityDescriptor)) // needs to be freed
+                {
+                    NtStatus status = NativeAPI.NtCreateWnfStateName(
+                        out ulong stateName,
+                        Common.WNF.Defines.WNF_STATE_NAME_LIFETIME.TEMPORARY, // If this process dies, the WNF Name will no longer be available
+                        scope,
+                        false,
+                        IntPtr.Zero,
+                        size,
+                        safeSD);
+
+                    if (status != NtStatus.Success)
+                    {
+                        Console.WriteLine($"[!] Could not create new WNF State Name! {status}");
+                        return 0;
+                    }
+
+                    Console.WriteLine("[+] New WNF State Name is created successfully : 0x{0}\n", stateName.ToString("X16"));
+                    return stateName;
+                }
+
+            }
+
+            return 0;
+        }
     }
 }

@@ -19,7 +19,8 @@ namespace WNFuck
                 Console.WriteLine("    |-> Timestamp : {0}", stamp);
                 Console.WriteLine("    |-> Buffer Size : {0} byte(s)", bufferSize);
                 Console.WriteLine("    |-> Data :\n");
-                HexDump.Dump(dataBuffer, (uint)bufferSize, 2);
+                if (dataBuffer != null)
+                    HexDump.Dump(dataBuffer, (uint)bufferSize, 2);
             }
             else
             {

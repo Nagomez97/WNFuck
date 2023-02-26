@@ -9,9 +9,8 @@ namespace WNFuck
     {
         static void Main(string[] args)
         {
-            //WELL_KNOWN_WNF_NAME stateName = WELL_KNOWN_WNF_NAME.WNF_XBOX_ACHIEVEMENT_TRACKER_STATE_CHANGED;
+            WELL_KNOWN_WNF_NAME stateName = WELL_KNOWN_WNF_NAME.WNF_XBOX_ACHIEVEMENT_TRACKER_STATE_CHANGED;
 
-            WELL_KNOWN_WNF_NAME stateName = (WELL_KNOWN_WNF_NAME)0x41C64E6DA2304845;
             Console.WriteLine($"[+] WNF Client started. Press any key to send a {stateName} notification.");
 
             string data = "Hi there!";
